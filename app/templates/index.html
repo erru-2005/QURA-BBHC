@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Statistics - BBHC College</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      html, body {
+        height: 100vh;
+        margin: 0;
+        position: relative;
+      }
+      .bg-mesh-gradient {
+        background: radial-gradient(
+            at 0% 0%,
+            rgb(152, 123, 88),
+            transparent 50%
+          ),
+          linear-gradient(135deg, #ce7865df, #627fce);
+        padding-bottom: 400px; /* Space for footer */
+      }
+      footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 50;
+        max-height: 40vh;
+        overflow-y: auto;
+        background-color: rgb(31, 41, 55);
+      }
+    </style>
+  </head>
+  <body class="bg-red-100 font-sans text-pink-800 antialiased select-none">
+    <div
+      class="min-h-screen p-4 flex items-center justify-center bg-mesh-gradient text-black-800"
+    >
+      <main
+        class="w-full max-w-4xl bg-white bg-opacity-90 backdrop-blur-lg shadow-2xl rounded-3xl p-6 md:p-8 transition duration-500 hover:scale-[1.01] border border-gray-200"
+      >
+        <!-- Header -->
+        <header
+          class="mb-8 pb-4 border-b border-gray-300 flex flex-col md:flex-row justify-between items-center gap-4"
+        >
+          <div class="flex items-center gap-4 w-full md:w-auto">
+            <div class="flex items-center gap-4">
+              <img
+                src="{{url_for('static', filename='logo-removebg-preview.png')}}"
+                alt="College Logo"
+                class="h-16 md:h-20 w-auto object-contain"
+              />
+              <div class="text-center md:text-left">
+                <h1 class="text-lg md:text-2xl font-bold text-[#6b1111]">
+                  Dr. B. B. Hegde First Grade College, Kundapura
+                </h1>
+                <p class="text-xs md:text-sm text-gray-600 mt-1">
+                  A Unit of Coondapur Education Society (R)
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <a
+              href="/"
+              class="inline-flex items-center gap-2 px-5 py-3 rounded-xl shadow-md bg-gradient-to-r from-red-500 to-indigo-600 hover:from-red-600 hover:to-indigo-700 text-white font-semibold transition-transform transform hover:scale-105"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.75L12 4.5l9 5.25M4.5 10.5V19.5a.75.75 0 00.75.75H9V15h6v5.25h3.75a.75.75 0 00.75-.75V10.5" />
+              </svg>
+              <span>Statistics</span>
+            </a>
+            <a
+              href="/all-books"
+              class="inline-flex items-center gap-2 px-5 py-3 rounded-xl shadow-md bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold transition-transform transform hover:scale-105"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              <span>All Books</span>
+            </a>
+          </div>
+        </header>
+
+        <!-- Search Section -->
+        <section class="mb-8">
+          <div class="text-center mb-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-[#6b1111] mb-2">
+              Library Statistics Search
+            </h2>
+            <p class="text-gray-600">
+              Search through our library collection by different criteria
+            </p>
+          </div>
+
+          <!-- Search Type Selector -->
+          <div class="flex items-center justify-center gap-4 mb-6">
+            <button id="prev" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            <div class="text-center">
+              <div id="current-option" class="text-xl font-semibold text-[#6b1111] transition-opacity duration-150">
+                Title
+              </div>
+            </div>
+            
+            <button id="next" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Search Input -->
+          <div class="relative max-w-md mx-auto">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search Title..."
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all"
+            />
+            <input type="hidden" id="search-type-hidden" value="Title" />
+            
+            <!-- Suggestions Box -->
+            <div id="suggestions" class="hidden absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
+              <!-- Suggestions will be populated here -->
+            </div>
+          </div>
+
+          <!-- Search Button -->
+          <div class="text-center mt-4">
+            <button
+              id="search-btn"
+              class="px-8 py-3 bg-gradient-to-r from-red-500 to-indigo-600 hover:from-red-600 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg transition-all transform hover:scale-105"
+            >
+              Search
+            </button>
+          </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="hidden">
+          <div class="border-t border-gray-300 pt-6">
+            <h3 class="text-xl font-semibold text-[#6b1111] mb-4">Search Results</h3>
+            <div id="results-container" class="space-y-3">
+              <!-- Results will be populated here -->
+            </div>
+            <div id="results-count" class="text-sm text-gray-600 mt-3 text-center"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 text-sm mt-6">
+      <div class="max-w-6xl mx-auto px-4 py-3 text-center">
+          <!-- Designed By -->
+          <div class="mb-2">
+              Designed by 
+              <span class="font-medium text-gray-300">III Year BCA (2025–26 Batch)</span>
+              <span class="text-gray-500"> | Under Guidance of </span>
+              <span class="font-medium text-gray-300">Mr. Pranam Betrabet</span>
+          </div>
+  
+          <!-- Divider -->
+          <div class="border-t border-gray-700 w-1/2 mx-auto my-2"></div>
+  
+          <!-- Copyright -->
+          <div class="text-xs text-gray-500">
+              © 2025 <span class="font-medium text-gray-300">Dr. B. B. Hegde First Grade College, Kundapura</span> — All Rights Reserved
+          </div>
+      </div>
+  </footer>
+    <script>
+      const options = ["Title", "Author", "Department", "Department Code"];
+      let currentIndex = 0;
+
+      const display = document.getElementById("current-option");
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+      const searchInput = document.getElementById("search-input");
+      const hiddenField = document.getElementById("search-type-hidden");
+      const suggestionsBox = document.getElementById("suggestions");
+      const searchBtn = document.getElementById("search-btn");
+      const resultsSection = document.getElementById("results");
+      const resultsContainer = document.getElementById("results-container");
+      const resultsCount = document.getElementById("results-count");
+
+      function updateDisplay() {
+        display.classList.add("opacity-0");
+        setTimeout(() => {
+          display.textContent = options[currentIndex];
+          display.classList.remove("opacity-0");
+          display.classList.add("opacity-100");
+          searchInput.placeholder = "Search " + options[currentIndex] + "...";
+          hiddenField.value = options[currentIndex];
+          fetchSuggestions(searchInput.value);
+        }, 150);
+      }
+
+      prev.addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + options.length) % options.length;
+        updateDisplay();
+      });
+
+      next.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % options.length;
+        updateDisplay();
+      });
+
+      let currentQuery = ""; // to track user's current input
+
+      searchInput.addEventListener("input", () => {
+        currentQuery = searchInput.value;
+        fetchSuggestions(currentQuery);
+      });
+
+      function fetchSuggestions(query) {
+        if (!query.trim()) {
+          suggestionsBox.classList.add("hidden");
+          suggestionsBox.innerHTML = "";
+          return;
+        }
+
+        const searchType = hiddenField.value;
+        fetch(`/api/suggestions?type=${encodeURIComponent(searchType)}&q=${encodeURIComponent(query)}`)
+          .then(response => response.json())
+          .then(suggestions => {
+            if (suggestions.length > 0) {
+              suggestionsBox.innerHTML = suggestions
+                .map(suggestion => `<div class="px-4 py-2 hover:bg-gray-100 cursor-pointer suggestion-item">${suggestion}</div>`)
+                .join("");
+              suggestionsBox.classList.remove("hidden");
+            } else {
+              suggestionsBox.classList.add("hidden");
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching suggestions:", error);
+            suggestionsBox.classList.add("hidden");
+          });
+      }
+
+      // Handle suggestion clicks
+      suggestionsBox.addEventListener("click", (e) => {
+        if (e.target.classList.contains("suggestion-item")) {
+          searchInput.value = e.target.textContent;
+          suggestionsBox.classList.add("hidden");
+          performSearch();
+        }
+      });
+
+      // Handle search button click
+      searchBtn.addEventListener("click", performSearch);
+
+      // Handle Enter key
+      searchInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          performSearch();
+        }
+      });
+
+      function performSearch() {
+        const query = searchInput.value.trim();
+        const searchType = hiddenField.value;
+
+        if (!query) {
+          alert("Please enter a search term");
+          return;
+        }
+
+        // Show loading state
+        searchBtn.textContent = "Searching...";
+        searchBtn.disabled = true;
+
+        fetch("/api/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            query: query,
+            searchType: searchType
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          displayResults(data.results, data.total);
+          resultsSection.classList.remove("hidden");
+        })
+        .catch(error => {
+          console.error("Error performing search:", error);
+          alert("An error occurred while searching. Please try again.");
+        })
+        .finally(() => {
+          searchBtn.textContent = "Search";
+          searchBtn.disabled = false;
+        });
+      }
+
+      function displayResults(results, total) {
+        if (results.length === 0) {
+          resultsContainer.innerHTML = '<p class="text-center text-gray-500 py-8">No results found</p>';
+        } else {
+          resultsContainer.innerHTML = results
+            .map(result => `
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-semibold text-[#6b1111]">${result.title || 'N/A'}</h4>
+                <p class="text-gray-600 text-sm">Author: ${result.author || 'N/A'}</p>
+                <p class="text-gray-600 text-sm">Department: ${result.department || 'N/A'}</p>
+                <p class="text-gray-600 text-sm">Department Code: ${result.department_code || 'N/A'}</p>
+              </div>
+            `)
+            .join("");
+        }
+        
+        resultsCount.textContent = `Found ${total} result${total !== 1 ? 's' : ''}`;
+      }
+
+      // Hide suggestions when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+          suggestionsBox.classList.add("hidden");
+        }
+      });
+
+      // Initialize
+      updateDisplay();
+    </script>
+  </body>
+</html> 

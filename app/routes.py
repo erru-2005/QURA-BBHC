@@ -44,64 +44,43 @@ def all_books():
 @main.route('/api/books')
 def get_books():
     try:
-        page = int(request.args.get('page', 1))
-        per_page = 12
-        skip = (page - 1) * per_page
-        
-        # Get filters
-        department = request.args.get('department', '')
-        author = request.args.get('author', '')
-        search = request.args.get('search', '')
+        search = request.args.get('q', '').strip()
+        department = request.args.get('department', '').strip()
         
         # Build filter query
         filter_query = {}
         if department:
             filter_query['department'] = department
-        if author:
-            filter_query['author'] = author
         if search:
             import re
             pattern = re.compile(search, re.IGNORECASE)
             filter_query['$or'] = [
                 {'title': pattern},
                 {'author': pattern},
+                {'isbn': pattern},
                 {'department': pattern}
             ]
         
-        # Get total count
-        total_books = mongo.db.books.count_documents(filter_query)
-        total_pages = (total_books + per_page - 1) // per_page
+        # Get books with optimized query
+        books_cursor = mongo.db.books.find(
+            filter_query,
+            {'_id': 1, 'title': 1, 'author': 1, 'department': 1, 'isbn': 1, 'department_code': 1}
+        ).limit(50)  # Limit results for performance
         
-        # Get books with pagination
-        books_cursor = mongo.db.books.find(filter_query).skip(skip).limit(per_page)
-        books = []
-        
-        for book in books_cursor:
-            book['_id'] = str(book['_id'])
-            # Check if book is issued
-            issued_book = mongo.db.issued_books.find_one({
-                'book.barcode': book.get('barcode', ''),
-                'status': 'issued'
-            })
-            
-            if issued_book:
-                book['status'] = 'issued'
-                book['issued_to'] = issued_book.get('student', {}).get('studentName', 'Unknown')
-            else:
-                book['status'] = 'available'
-            
-            books.append(book)
+        books = [{
+            **book,
+            '_id': str(book['_id']),
+            'status': 'available'
+        } for book in books_cursor]
         
         return jsonify({
             'books': books,
-            'total_pages': total_pages,
-            'current_page': page,
-            'total_books': total_books
+            'total': len(books)
         })
         
     except Exception as e:
         print(f"Error in get_books: {e}")
-        return jsonify({'error': 'Error fetching books'}), 500
+        return jsonify({'error': str(e)}), 500
 
 @main.route('/api/departments')
 def get_departments():

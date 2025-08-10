@@ -6,6 +6,10 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
+    return render_template('all_books.html')
+
+@main.route('/statistic')
+def statistics():
     return render_template('index.html')
 
 @main.route('/all-books')
@@ -177,4 +181,4 @@ def get_suggestions():
     # Get suggestions from MongoDB
     suggestions = list(mongo.db.books.distinct(field, {field: pattern}))
     
-    return jsonify(suggestions[:5])  # Limit to 5 suggestions 
+    return jsonify(suggestions[:5])  # Limit to 5 suggestions

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>All Books — Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* small custom tweaks */
+      :root{
+        --glass: rgba(255,255,255,0.6);
+      }
+      html,body{height:100%}
+      .card-media{height:160px;min-height:120px}
+      @media(min-width:1024px){ .card-media{height:180px} }
+      /* subtle scrollbar for footer area */
+      footer::-webkit-scrollbar{height:8px}
+      footer::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:999px}
+    </style>
+  </head>
+  <body class="min-h-screen bg-gradient-to-br from-slate-50 via-rose-50 to-indigo-50 text-slate-900 antialiased">
+    <!-- Container -->
+    <div class="min-h-screen flex flex-col">
+
+      <!-- Header -->
+      <header class="sticky top-0 z-40 backdrop-blur-sm bg-white/60 border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4 md:gap-6">
+          <div class="flex items-center gap-3">
+            <img src="{{ url_for('static', filename='logo-removebg-preview.png') }}" alt="logo" class="h-12 w-12 object-contain rounded-md shadow-sm" />
+            <div>
+              <h1 class="text-lg md:text-2xl font-semibold text-rose-700">Dr. B. B. Hegde First Grade College</h1>
+              <p class="text-xs md:text-sm text-slate-500">Library — Complete Collection</p>
+            </div>
+          </div>
+
+          <!-- search (flex-grow) -->
+          <div class="ml-4 flex-1">
+            <label for="search-input" class="sr-only">Search books</label>
+            <div class="relative">
+              <input id="search-input" type="search" placeholder="Search by title, author, ISBN..." class="w-full rounded-xl pl-4 pr-32 py-3 shadow-sm border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-300 bg-white/80" />
+              <button id="clear-search" title="Clear" class="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center gap-2 px-3 py-1 rounded-md text-sm bg-slate-100 hover:bg-slate-200 hidden">
+                Clear
+              </button>
+              <button id="search-spinner" class="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center gap-2 px-3 py-1 rounded-md text-sm bg-rose-500 text-white hidden">
+                <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-opacity="0.25" fill="none"/><path d="M22 12a10 10 0 00-10-10" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/></svg>
+                Searching
+              </button>
+            </div>
+          </div>
+
+          <!-- actions -->
+          <nav class="hidden md:flex items-center gap-3 ml-4">
+            <a href="/statistic" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-rose-500 to-indigo-600 text-white shadow-md hover:scale-[1.02] transition">Statistics</a>
+            <a href="/" class="px-4 py-2 rounded-lg bg-white border border-slate-200 shadow-sm hover:shadow-md">All Books</a>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Hero / Filters -->
+      <div class="max-w-6xl mx-auto px-4 py-6">
+        <div class="bg-gradient-to-r from-white/70 to-white/40 rounded-2xl p-4 md:p-6 shadow-lg border border-slate-100 backdrop-blur">
+          <div class="flex flex-col md:flex-row md:items-center md:gap-6">
+            <div class="flex-1">
+              <h2 class="text-xl md:text-2xl font-bold text-rose-600">Library Book Collection</h2>
+              <p class="text-sm text-slate-600 mt-1">Browse and search in real-time — responsive UI for mobile and desktop.</p>
+            </div>
+
+            <div class="mt-4 md:mt-0 flex flex-col sm:flex-row gap-3 items-stretch">
+              <select id="filter-department" class="px-4 py-2 rounded-xl border border-slate-200 outline-none shadow-sm bg-white">
+                <option value="">All Departments</option>
+              </select>
+
+              <select id="filter-author" class="px-4 py-2 rounded-xl border border-slate-200 outline-none shadow-sm bg-white">
+                <option value="">All Authors</option>
+              </select>
+
+              <button id="reset-filters" class="px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main -->
+      <main class="max-w-6xl mx-auto px-4 pb-8 flex-1 w-full">
+        <!-- results / grid -->
+        <section id="results" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- cards inserted here -->
+        </section>
+
+        <!-- pagination / load more -->
+        <div id="controls" class="mt-8 flex justify-center items-center gap-3">
+          <button id="prev-btn" class="px-4 py-2 rounded-md border border-slate-200 hidden">Previous</button>
+          <div id="page-info" class="text-sm text-slate-600"></div>
+          <button id="next-btn" class="px-4 py-2 rounded-md border border-slate-200 hidden">Next</button>
+        </div>
+
+        <!-- loading & empty -->
+        <div id="loading-skel" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- skeleton placeholders -->
+        </div>
+
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-gradient-to-r from-rose-700 to-indigo-800 text-white">
+        <div class="max-w-6xl mx-auto px-4 py-4 text-center text-sm">
+          <div>Designed by <strong>III Year BCA (2025–26 Batch)</strong> | Under Guidance of <strong>Mr. Pranam Betrabet</strong></div>
+          <div class="mt-2 opacity-90">© 2025 Dr. B. B. Hegde First Grade College, Kundapura — All Rights Reserved</div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      /* ====== config ====== */
+      const API = {
+        books: '/api/books',
+        departments: '/api/departments',
+        authors: '/api/authors'
+      };
+
+      /* ====== state ====== */
+      let state = {
+        page: 1,
+        total_pages: 1,
+        q: '',
+        department: '',
+        author: '',
+        typing: false,
+        debounceTimer: null
+      };
+
+      /* ====== DOM refs ====== */
+      const results = document.getElementById('results');
+      const loadingSkel = document.getElementById('loading-skel');
+      const filterDepartment = document.getElementById('filter-department');
+      const filterAuthor = document.getElementById('filter-author');
+      const searchInput = document.getElementById('search-input');
+      const clearSearchBtn = document.getElementById('clear-search');
+      const searchSpinner = document.getElementById('search-spinner');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const pageInfo = document.getElementById('page-info');
+      const resetFilters = document.getElementById('reset-filters');
+
+      /* ====== helpers ====== */
+      function showSpinner(on){
+        searchSpinner.classList.toggle('hidden', !on);
+        clearSearchBtn.classList.toggle('hidden', on || !state.q);
+      }
+
+      function showSkeleton(count=6){
+        loadingSkel.innerHTML = '';
+        for(let i=0;i<count;i++){
+          const s = document.createElement('div');
+          s.className = 'p-4 rounded-lg bg-white/60 border border-slate-100 shadow-sm animate-pulse';
+          s.innerHTML = `
+            <div class="h-36 bg-slate-200 rounded-md card-media"></div>
+            <div class="h-4 w-3/4 mt-4 bg-slate-200 rounded"></div>
+            <div class="h-3 w-1/2 mt-2 bg-slate-200 rounded"></div>
+          `;
+          loadingSkel.appendChild(s);
+        }
+      }
+
+      function renderBooks(books){
+        results.innerHTML = '';
+        if(!books || books.length===0){
+          results.innerHTML = `<div class="col-span-full text-center py-12 text-slate-600"><strong>No books found</strong><div class="mt-2 text-sm">Try clearing filters or searching a different term.</div></div>`;
+          return;
+        }
+        for(const b of books){
+          const card = document.createElement('article');
+          card.className = 'bg-white rounded-2xl shadow hover:shadow-lg border border-slate-100 overflow-hidden transition';
+          card.innerHTML = `
+            <div class="card-media bg-gradient-to-br from-rose-50 to-indigo-50 flex items-center justify-center">
+              <!-- optional thumbnail if you have b.cover_url -->
+              ${b.cover_url ? `<img src="${b.cover_url}" alt="${escapeHtml(b.title)}" class="object-cover w-full h-full">` : `<div class="text-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 opacity-40" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5V4.5A1.5 1.5 0 015.5 3h11A1.5 1.5 0 0118 4.5v15"/></svg></div>`}
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold text-rose-700 line-clamp-2">${escapeHtml(b.title || 'Untitled')}</h3>
+              <p class="text-sm text-slate-600 mt-2">${escapeHtml(b.author || 'Unknown')}</p>
+              <div class="mt-3 text-xs text-slate-500 space-y-1">
+                <div>Dept: <span class="font-medium">${escapeHtml(b.department || 'N/A')}</span></div>
+                ${b.isbn ? `<div>ISBN: <span class="font-medium">${escapeHtml(b.isbn)}</span></div>` : ''}
+                ${b.publication_year ? `<div>Year: <span class="font-medium">${escapeHtml(b.publication_year)}</span></div>` : ''}
+              </div>
+              <div class="mt-4 flex items-center justify-between">
+                <span class="inline-block px-3 py-1 text-xs bg-slate-100 rounded-full">Available</span>
+                <a href="/book/${b.id || ''}" class="text-sm font-medium text-rose-600 hover:underline">View</a>
+              </div>
+            </div>
+          `;
+          results.appendChild(card);
+        }
+      }
+
+      // naive html escape for templated text
+      function escapeHtml(s=''){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+
+      /* ====== network ====== */
+      async function fetchJSON(url){
+        const res = await fetch(url, {cache: 'no-store'});
+        if(!res.ok) throw new Error('Network response not ok');
+        return res.json();
+      }
+
+      async function loadFilters(){
+        try{
+          const [depts, authors] = await Promise.all([
+            fetchJSON(API.departments),
+            fetchJSON(API.authors)
+          ]);
+          filterDepartment.innerHTML = '<option value="">All Departments</option>';
+          filterAuthor.innerHTML = '<option value="">All Authors</option>';
+          depts.forEach(d=> filterDepartment.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(d)}">${escapeHtml(d)}</option>`));
+          authors.forEach(a=> filterAuthor.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(a)}">${escapeHtml(a)}</option>`));
+        }catch(err){
+          console.error('Failed loading filters', err);
+        }
+      }
+
+      async function loadBooks(){
+        // show skeletal UI
+        results.innerHTML = '';
+        showSkeleton(6);
+        loadingSkel.style.display = 'grid';
+
+        const params = new URLSearchParams({
+          page: state.page,
+          q: state.q || '',
+          department: state.department || '',
+          author: state.author || ''
+        });
+
+        try{
+          const data = await fetchJSON(`${API.books}?${params.toString()}`);
+          loadingSkel.style.display = 'none';
+          renderBooks(data.books || []);
+          state.total_pages = data.total_pages || 1;
+          updateControls();
+        }catch(err){
+          loadingSkel.style.display = 'none';
+          results.innerHTML = `<div class="col-span-full text-center py-12 text-red-500">Error loading books — try again.</div>`;
+          console.error(err);
+        }
+      }
+
+      function updateControls(){
+        pageInfo.textContent = `Page ${state.page} of ${state.total_pages}`;
+        prevBtn.classList.toggle('hidden', state.page <= 1);
+        nextBtn.classList.toggle('hidden', state.page >= state.total_pages);
+      }
+
+      /* ====== events / interactions ====== */
+      // Debounced search
+      function scheduleSearch(){
+        if(state.debounceTimer) clearTimeout(state.debounceTimer);
+        state.debounceTimer = setTimeout(()=>{
+          state.page = 1;
+          performSearch();
+        }, 360); // 360ms debounce
+      }
+
+      async function performSearch(){
+        showSpinner(true);
+        try{
+          state.q = (searchInput.value || '').trim();
+          await loadBooks();
+        }finally{
+          showSpinner(false);
+        }
+      }
+
+      // wire controls
+      searchInput.addEventListener('input', (e)=>{
+        state.q = e.target.value;
+        clearSearchBtn.classList.toggle('hidden', !state.q);
+        scheduleSearch();
+      });
+
+      clearSearchBtn.addEventListener('click', ()=>{
+        searchInput.value = '';
+        state.q = '';
+        clearSearchBtn.classList.add('hidden');
+        state.page = 1;
+        loadBooks();
+      });
+
+      filterDepartment.addEventListener('change', ()=>{
+        state.department = filterDepartment.value;
+        state.page = 1;
+        loadBooks();
+      });
+
+      filterAuthor.addEventListener('change', ()=>{
+        state.author = filterAuthor.value;
+        state.page = 1;
+        loadBooks();
+      });
+
+      resetFilters.addEventListener('click', ()=>{
+        filterDepartment.value = '';
+        filterAuthor.value = '';
+        searchInput.value = '';
+        state = { ...state, q:'', department:'', author:'', page:1 };
+        loadBooks();
+      });
+
+      prevBtn.addEventListener('click', ()=>{
+        if(state.page > 1){ state.page--; loadBooks(); window.scrollTo({top:200, behavior:'smooth'}); }
+      });
+      nextBtn.addEventListener('click', ()=>{
+        if(state.page < state.total_pages){ state.page++; loadBooks(); window.scrollTo({top:200, behavior:'smooth'}); }
+      });
+
+      // keyboard: Enter triggers immediate search
+      searchInput.addEventListener('keypress', (e)=>{
+        if(e.key === 'Enter'){ e.preventDefault(); if(state.debounceTimer) clearTimeout(state.debounceTimer); performSearch(); }
+      });
+
+      /* ====== init ====== */
+      (function init(){
+        showSkeleton(6);
+        loadFilters();
+        loadBooks();
+      })();
+    </script>
+  </body>
+</html>

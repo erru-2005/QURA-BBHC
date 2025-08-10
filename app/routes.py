@@ -4,11 +4,11 @@ from bson import ObjectId
 
 main = Blueprint('main', __name__)
 
-@main.route('/statistic')
-def index():
-    return render_template('statistic.html')
-
 @main.route('/')
+def index():
+    return render_template('index.html')
+
+@main.route('/all-books')
 def all_books():
     try:
         # Get all books from MongoDB
@@ -35,7 +35,7 @@ def all_books():
         print(f"Error fetching books: {e}")
         books = []
     
-    return render_template('index.html', books=books)
+    return render_template('all_books.html', books=books)
 
 @main.route('/api/books')
 def get_books():

@@ -40,11 +40,12 @@
     </style>
   </head>
   <body class="bg-gradient-to-br from-gray-50 to-gray-100">
-    <div class="min-h-screen p-4">
-      <main class="w-full max-w-6xl mx-auto glass-card rounded-2xl p-6 md:p-8">
-
-        <!-- HEADER -->
-<header class="relative bg-white/80 backdrop-blur-lg p-6 rounded-2xl mb-8 shadow-lg border border-white/30 transition-all duration-500 hover:shadow-2xl hover:scale-[1.01]">
+    <div class="min-h-screen">
+      <main class="w-full mt-4">
+        <!-- Content Wrapper for internal elements -->
+        <div class="max-w-6xl mx-auto px-4">
+          <!-- HEADER -->
+<header class="relative bg-white/80 backdrop-blur-lg p-6 rounded-2xl mb-8 shadow-lg border border-white/30 transition-all duration-500 hover:shadow-2xl">
   <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
 
     <!-- Logo + Title -->
@@ -72,12 +73,10 @@
              hover:from-red-600 hover:to-indigo-700 text-white font-semibold 
              transition-all transform hover:scale-105 hover:shadow-lg w-full md:w-auto"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-           stroke="currentColor" width="20" height="20"
-           class="transition-transform duration-300 group-hover:rotate-6">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M3 9.75L12 4.5l9 5.25M4.5 10.5V19.5a.75.75 0 00.75.75H9V15h6v5.25h3.75a.75.75 0 00.75-.75V10.5" />
-      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M11 19V6m-4 13v-4m8 4V10m4 9V4" />
+  </svg>
       <span>Statistics</span>
     </a>
 
@@ -111,7 +110,7 @@
 </div>
 
 <!-- Main Content -->
-<section class="flex-1 mb-8 px-4 pt-4">
+<section class="mb-8">
   <div class="text-center mb-6">
     <h2 class="text-2xl sm:text-3xl font-bold text-[#6b1111] mb-1">
       Library Book Collection

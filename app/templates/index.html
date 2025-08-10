@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Library Statistics - BBHC College</title>
+    <title>All Books - Library Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       html, body {
@@ -37,7 +37,7 @@
       class="min-h-screen p-4 flex items-center justify-center bg-mesh-gradient text-black-800"
     >
       <main
-        class="w-full max-w-4xl bg-white bg-opacity-90 backdrop-blur-lg shadow-2xl rounded-3xl p-6 md:p-8 transition duration-500 hover:scale-[1.01] border border-gray-200"
+        class="w-full max-w-6xl bg-white bg-opacity-90 backdrop-blur-lg shadow-2xl rounded-3xl p-6 md:p-8 transition duration-500 hover:scale-[1.01] border border-gray-200"
       >
         <!-- Header -->
         <header
@@ -62,7 +62,7 @@
           </div>
           <div class="flex gap-3">
             <a
-              href="/"
+              href="/statistic"
               class="inline-flex items-center gap-2 px-5 py-3 rounded-xl shadow-md bg-gradient-to-r from-red-500 to-indigo-600 hover:from-red-600 hover:to-indigo-700 text-white font-semibold transition-transform transform hover:scale-105"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
@@ -71,7 +71,7 @@
               <span>Statistics</span>
             </a>
             <a
-              href="/all-books"
+              href="/"
               class="inline-flex items-center gap-2 px-5 py-3 rounded-xl shadow-md bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold transition-transform transform hover:scale-105"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
@@ -82,73 +82,56 @@
           </div>
         </header>
 
-        <!-- Search Section -->
+        <!-- Main Content -->
         <section class="mb-8">
           <div class="text-center mb-6">
             <h2 class="text-2xl md:text-3xl font-bold text-[#6b1111] mb-2">
-              Library Statistics Search
+              Library Book Collection
             </h2>
             <p class="text-gray-600">
-              Search through our library collection by different criteria
+              Browse through our complete library collection
             </p>
           </div>
 
-          <!-- Search Type Selector -->
-          <div class="flex items-center justify-center gap-4 mb-6">
-            <button id="prev" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            
-            <div class="text-center">
-              <div id="current-option" class="text-xl font-semibold text-[#6b1111] transition-opacity duration-150">
-                Title
-              </div>
+          <!-- Filters and Search -->
+          <div class="flex flex-col md:flex-row gap-4 mb-6 justify-center items-center">
+            <div class="flex gap-2">
+              <select id="filter-department" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <option value="">All Departments</option>
+                <!-- Department options will be populated here -->
+              </select>
+              <select id="filter-author" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <option value="">All Authors</option>
+                <!-- Author options will be populated here -->
+              </select>
             </div>
-            
-            <button id="next" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
-          <!-- Search Input -->
-          <div class="relative max-w-md mx-auto">
-            <input
-              type="text"
-              id="search-input"
-              placeholder="Search Title..."
-              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all"
-            />
-            <input type="hidden" id="search-type-hidden" value="Title" />
-            
-            <!-- Suggestions Box -->
-            <div id="suggestions" class="hidden absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
-              <!-- Suggestions will be populated here -->
+            <div class="relative">
+              <input
+                type="text"
+                id="search-input"
+                placeholder="Search books..."
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none w-64"
+              />
+              <button id="search-btn" class="absolute right-2 top-1/2 transform -translate-y-1/2 px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600">
+                Search
+              </button>
             </div>
           </div>
 
-          <!-- Search Button -->
-          <div class="text-center mt-4">
-            <button
-              id="search-btn"
-              class="px-8 py-3 bg-gradient-to-r from-red-500 to-indigo-600 hover:from-red-600 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg transition-all transform hover:scale-105"
-            >
-              Search
-            </button>
+          <!-- Books Display -->
+          <div id="books-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Books will be populated here -->
           </div>
-        </section>
 
-        <!-- Results Section -->
-        <section id="results" class="hidden">
-          <div class="border-t border-gray-300 pt-6">
-            <h3 class="text-xl font-semibold text-[#6b1111] mb-4">Search Results</h3>
-            <div id="results-container" class="space-y-3">
-              <!-- Results will be populated here -->
-            </div>
-            <div id="results-count" class="text-sm text-gray-600 mt-3 text-center"></div>
+          <!-- Pagination -->
+          <div id="pagination" class="flex justify-center items-center gap-2 mt-8">
+            <!-- Pagination controls will be populated here -->
+          </div>
+
+          <!-- Loading State -->
+          <div id="loading" class="text-center py-8 hidden">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"></div>
+            <p class="mt-2 text-gray-600">Loading books...</p>
           </div>
         </section>
       </main>
@@ -174,161 +157,178 @@
           </div>
       </div>
   </footer>
+
     <script>
-      const options = ["Title", "Author", "Department", "Department Code"];
-      let currentIndex = 0;
+      let currentPage = 1;
+      let totalPages = 1;
+      let currentFilters = {
+        department: '',
+        author: '',
+        search: ''
+      };
 
-      const display = document.getElementById("current-option");
-      const prev = document.getElementById("prev");
-      const next = document.getElementById("next");
-      const searchInput = document.getElementById("search-input");
-      const hiddenField = document.getElementById("search-type-hidden");
-      const suggestionsBox = document.getElementById("suggestions");
-      const searchBtn = document.getElementById("search-btn");
-      const resultsSection = document.getElementById("results");
-      const resultsContainer = document.getElementById("results-container");
-      const resultsCount = document.getElementById("results-count");
+      // DOM elements
+      const booksContainer = document.getElementById('books-container');
+      const loading = document.getElementById('loading');
+      const pagination = document.getElementById('pagination');
+      const filterDepartment = document.getElementById('filter-department');
+      const filterAuthor = document.getElementById('filter-author');
+      const searchInput = document.getElementById('search-input');
+      const searchBtn = document.getElementById('search-btn');
 
-      function updateDisplay() {
-        display.classList.add("opacity-0");
-        setTimeout(() => {
-          display.textContent = options[currentIndex];
-          display.classList.remove("opacity-0");
-          display.classList.add("opacity-100");
-          searchInput.placeholder = "Search " + options[currentIndex] + "...";
-          hiddenField.value = options[currentIndex];
-          fetchSuggestions(searchInput.value);
-        }, 150);
+      // Initialize page
+      document.addEventListener('DOMContentLoaded', function() {
+        loadFilters();
+        loadBooks();
+        
+        // Event listeners
+        filterDepartment.addEventListener('change', handleFilterChange);
+        filterAuthor.addEventListener('change', handleFilterChange);
+        searchBtn.addEventListener('click', handleSearch);
+        searchInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            handleSearch();
+          }
+        });
+      });
+
+      function loadFilters() {
+        // Load department filters
+        fetch('/api/departments')
+          .then(response => response.json())
+          .then(departments => {
+            filterDepartment.innerHTML = '<option value="">All Departments</option>';
+            departments.forEach(dept => {
+              const option = document.createElement('option');
+              option.value = dept;
+              option.textContent = dept;
+              filterDepartment.appendChild(option);
+            });
+          })
+          .catch(error => console.error('Error loading departments:', error));
+
+        // Load author filters
+        fetch('/api/authors')
+          .then(response => response.json())
+          .then(authors => {
+            filterAuthor.innerHTML = '<option value="">All Authors</option>';
+            authors.forEach(author => {
+              const option = document.createElement('option');
+              option.value = author;
+              option.textContent = author;
+              filterAuthor.appendChild(option);
+            });
+          })
+          .catch(error => console.error('Error loading authors:', error));
       }
 
-      prev.addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + options.length) % options.length;
-        updateDisplay();
-      });
+      function handleFilterChange() {
+        currentFilters.department = filterDepartment.value;
+        currentFilters.author = filterAuthor.value;
+        currentPage = 1;
+        loadBooks();
+      }
 
-      next.addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % options.length;
-        updateDisplay();
-      });
+      function handleSearch() {
+        currentFilters.search = searchInput.value.trim();
+        currentPage = 1;
+        loadBooks();
+      }
 
-      let currentQuery = ""; // to track user's current input
+      function loadBooks() {
+        showLoading(true);
+        
+        const params = new URLSearchParams({
+          page: currentPage,
+          ...currentFilters
+        });
 
-      searchInput.addEventListener("input", () => {
-        currentQuery = searchInput.value;
-        fetchSuggestions(currentQuery);
-      });
-
-      function fetchSuggestions(query) {
-        if (!query.trim()) {
-          suggestionsBox.classList.add("hidden");
-          suggestionsBox.innerHTML = "";
-          return;
-        }
-
-        const searchType = hiddenField.value;
-        fetch(`/api/suggestions?type=${encodeURIComponent(searchType)}&q=${encodeURIComponent(query)}`)
+        fetch(`/api/books?${params}`)
           .then(response => response.json())
-          .then(suggestions => {
-            if (suggestions.length > 0) {
-              suggestionsBox.innerHTML = suggestions
-                .map(suggestion => `<div class="px-4 py-2 hover:bg-gray-100 cursor-pointer suggestion-item">${suggestion}</div>`)
-                .join("");
-              suggestionsBox.classList.remove("hidden");
-            } else {
-              suggestionsBox.classList.add("hidden");
-            }
+          .then(data => {
+            displayBooks(data.books);
+            updatePagination(data.total_pages, data.current_page);
+            showLoading(false);
           })
           .catch(error => {
-            console.error("Error fetching suggestions:", error);
-            suggestionsBox.classList.add("hidden");
+            console.error('Error loading books:', error);
+            showLoading(false);
+            booksContainer.innerHTML = '<p class="text-center text-red-500 py-8">Error loading books. Please try again.</p>';
           });
       }
 
-      // Handle suggestion clicks
-      suggestionsBox.addEventListener("click", (e) => {
-        if (e.target.classList.contains("suggestion-item")) {
-          searchInput.value = e.target.textContent;
-          suggestionsBox.classList.add("hidden");
-          performSearch();
-        }
-      });
-
-      // Handle search button click
-      searchBtn.addEventListener("click", performSearch);
-
-      // Handle Enter key
-      searchInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-          performSearch();
-        }
-      });
-
-      function performSearch() {
-        const query = searchInput.value.trim();
-        const searchType = hiddenField.value;
-
-        if (!query) {
-          alert("Please enter a search term");
+      function displayBooks(books) {
+        if (books.length === 0) {
+          booksContainer.innerHTML = '<p class="text-center text-gray-500 py-8 col-span-full">No books found matching your criteria.</p>';
           return;
         }
 
-        // Show loading state
-        searchBtn.textContent = "Searching...";
-        searchBtn.disabled = true;
-
-        fetch("/api/search", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            query: query,
-            searchType: searchType
-          })
-        })
-        .then(response => response.json())
-        .then(data => {
-          displayResults(data.results, data.total);
-          resultsSection.classList.remove("hidden");
-        })
-        .catch(error => {
-          console.error("Error performing search:", error);
-          alert("An error occurred while searching. Please try again.");
-        })
-        .finally(() => {
-          searchBtn.textContent = "Search";
-          searchBtn.disabled = false;
-        });
+        booksContainer.innerHTML = books.map(book => `
+          <div class="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
+            <h3 class="text-lg font-semibold text-[#6b1111] mb-2 line-clamp-2">${book.title || 'Untitled'}</h3>
+            <div class="space-y-2 text-sm text-gray-600">
+              <p><span class="font-medium">Author:</span> ${book.author || 'Unknown'}</p>
+              <p><span class="font-medium">Department:</span> ${book.department || 'N/A'}</p>
+              <p><span class="font-medium">Department Code:</span> ${book.department_code || 'N/A'}</p>
+              ${book.isbn ? `<p><span class="font-medium">ISBN:</span> ${book.isbn}</p>` : ''}
+              ${book.publication_year ? `<p><span class="font-medium">Year:</span> ${book.publication_year}</p>` : ''}
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-200">
+              <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                Available
+              </span>
+            </div>
+          </div>
+        `).join('');
       }
 
-      function displayResults(results, total) {
-        if (results.length === 0) {
-          resultsContainer.innerHTML = '<p class="text-center text-gray-500 py-8">No results found</p>';
-        } else {
-          resultsContainer.innerHTML = results
-            .map(result => `
-              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                <h4 class="font-semibold text-[#6b1111]">${result.title || 'N/A'}</h4>
-                <p class="text-gray-600 text-sm">Author: ${result.author || 'N/A'}</p>
-                <p class="text-gray-600 text-sm">Department: ${result.department || 'N/A'}</p>
-                <p class="text-gray-600 text-sm">Department Code: ${result.department_code || 'N/A'}</p>
-              </div>
-            `)
-            .join("");
+      function updatePagination(totalPages, currentPage) {
+        this.totalPages = totalPages;
+        this.currentPage = currentPage;
+        
+        if (totalPages <= 1) {
+          pagination.innerHTML = '';
+          return;
+        }
+
+        let paginationHTML = '';
+        
+        // Previous button
+        if (currentPage > 1) {
+          paginationHTML += `<button onclick="changePage(${currentPage - 1})" class="px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50">Previous</button>`;
         }
         
-        resultsCount.textContent = `Found ${total} result${total !== 1 ? 's' : ''}`;
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+          if (i === currentPage) {
+            paginationHTML += `<span class="px-3 py-2 bg-red-500 text-white rounded-md">${i}</span>`;
+          } else if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+            paginationHTML += `<button onclick="changePage(${i})" class="px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50">${i}</button>`;
+          } else if (i === currentPage - 3 || i === currentPage + 3) {
+            paginationHTML += `<span class="px-3 py-2 text-gray-500">...</span>`;
+          }
+        }
+        
+        // Next button
+        if (currentPage < totalPages) {
+          paginationHTML += `<button onclick="changePage(${currentPage + 1})" class="px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50">Next</button>`;
+        }
+        
+        pagination.innerHTML = paginationHTML;
       }
 
-      // Hide suggestions when clicking outside
-      document.addEventListener("click", (e) => {
-        if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-          suggestionsBox.classList.add("hidden");
-        }
-      });
+      function changePage(page) {
+        currentPage = page;
+        loadBooks();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
 
-      // Initialize
-      updateDisplay();
+      function showLoading(show) {
+        loading.classList.toggle('hidden', !show);
+        if (show) {
+          booksContainer.innerHTML = '';
+        }
+      }
     </script>
   </body>
 </html> 

@@ -11,14 +11,6 @@
         margin: 0;
         position: relative;
       }
-      .bg-mesh-gradient {
-        background: 
-          radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-          radial-gradient(circle at 40% 40%, rgba(120, 119, 255, 0.2) 0%, transparent 50%),
-          linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding-bottom: 400px;
-      }
       .glass-card {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(20px);
@@ -47,17 +39,6 @@
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
       }
-      footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        z-index: 50;
-        max-height: 40vh;
-        overflow-y: auto;
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
       .suggestion-item {
         transition: all 0.2s ease;
         border-radius: 8px;
@@ -77,378 +58,489 @@
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         border-color: #6366f1;
       }
-      .glass-card {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 111, 97, 0.5),  /* reddish with transparency */
-    rgba(255, 204, 112, 0.5), /* yellowish transparent */
-    rgba(142, 197, 252, 0.5)  /* blueish transparent */
-  );
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    0 4px 16px rgba(0, 0, 0, 0.05);
-}
-   .glass-card {
-    background-color: rgba(255, 255, 255, 0.75); /* white with 75% opacity */
-    backdrop-filter: blur(10px); /* adds the glassy blur effect */
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2); /* subtle border */
-  }
-  main h1, main h2 {
-  font-size: 90%; /* slightly smaller headings */
-}
-main input, main button {
-  font-size: 0.95rem; /* reduce input/button text size */
-  padding: 0.75rem 1rem; /* slightly smaller padding */
-}
-
-
-
-
-
+      main h1, main h2 {
+        font-size: 90%;
+      }
+      main input, main button {
+        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
+      }
     </style>
   </head>
- <body class="bg-gradient-to-br from-blue-50 to-purple-50 font-sans text-red-800 antialiased select-none">
-
-    <div
-      class="min-h-screen p-4 flex items-center justify-center bg-mesh-gradient text-gray-800"
-    > 
-
-     <main
-  class="w-full max-w-4xl glass-card rounded-3xl p-6 md:p-8 transition-all duration-700 hover:scale-[1.02] floating-animation"
->
-
-
-        <!-- Header -->
-        <header
-          class="mb-10 pb-6 border-b border-gradient-to-r from-gray-200 to-gray-300 flex flex-col md:flex-row justify-between items-center gap-6"
-        >
-          <div class="flex items-center gap-6 w-full md:w-auto">
-            <div class="flex items-center gap-6">
-              <div class="relative">
-               <img
-  src="{{ url_for('static', filename='logo-removebg-preview.png') }}"
-  alt="College Logo"
-  class="h-24 md:h-28 w-auto object-contain drop-shadow-lg"
-/>
-
-                <div class="absolute -inset-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-20 blur-xl"></div>
-              </div>
-              <div class="text-center md:text-left">
-                <h1 class="text-lg md:text-2xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
-  Dr. B. B. Hegde First Grade College, Kundapura
-</h1>
-
-                <p class="text-base md:text-lg text-gray-600 mt-2 font-medium">
-                  A Unit of Coondapur Education Society (R)
-                </p>
-
-              </div>
+ <body>
+  <main class="w-full bg-gradient-to-br from-[#1a120b] via-[#2c1810] to-[#0f0a07] text-white min-h-screen pb-20">
+    <!-- Header Section -->
+    <section class="mx-auto max-w-6xl">
+      <header class=" py-5 px-6 flex flex-col md:flex-row justify-between items-center gap-4 
+                     bg-gradient-to-r from-[#1a120b] via-[#2c1810] to-[#1a120b]
+                     shadow-[0_0_30px_rgba(43,26,16,0.7)] rounded-2xl 
+                     border border-amber-900/20 relative overflow-hidden">
+        <!-- Ambient Glow Effect -->
+        <div class="absolute inset-0 bg-gradient-to-r from-amber-600/5 via-red-600/5 to-purple-600/5 animate-pulse"></div>
+        
+        <!-- Left Section -->
+        <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left relative z-10">
+          <div class="relative flex-shrink-0">
+            <!-- Spreading light effects -->
+            <div class="absolute -inset-4 bg-gradient-radial from-amber-500/20 via-amber-500/5 to-transparent 
+                        rounded-full blur-xl transform-gpu animate-pulse"></div>
+            <div class="absolute -inset-8 bg-gradient-radial from-orange-500/10 via-amber-500/5 to-transparent 
+                        rounded-full blur-2xl transform-gpu animate-pulse delay-150"></div>
+            <!-- Logo wrapper with light spread -->
+            <div class="relative">
+              <div class="absolute -inset-2 bg-gradient-radial from-orange-500/20 via-amber-500/10 to-transparent 
+                          rounded-full blur-md animate-pulse-slow"></div>
+              <img
+                src="{{ url_for('static', filename='logo-removebg-preview.png') }}"
+                alt="College Logo"
+                class="h-16 sm:h-20 w-auto object-contain relative z-10
+                       drop-shadow-[0_0_8px_rgba(255,140,0,0.2)]"
+              />
             </div>
           </div>
-          <div class="flex gap-4">
-           <a href="/" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
-  bg-gradient-to-r from-red-500 via-purple-700 to-blue-600
-  text-white font-semibold shadow-lg
-  hover:from-red-600 hover:via-purple-800 hover:to-blue-700
-  transition-all duration-300"
->
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-       stroke="currentColor" width="20" height="20" class="stroke-white">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 
-             3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 
-             4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 
-             3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 
-             16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-  </svg>
-  All Books
-</a>
 
-
-
-            
-          </div>
-        </header>
-
-        <!-- Search Section -->
-        <section class="mb-10">
-          <div class="text-center mb-8">
-            <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
-              Library Statistics Search
-            </h2>
-            <p class="text-gray-600 text-lg font-medium">
-              Discover our comprehensive library collection with intelligent search
+          <div>
+            <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-amber-100 leading-tight
+                       drop-shadow-[0_2px_10px_rgba(251,146,60,0.3)]">
+              Dr. B. B. Hegde First Grade College, Kundapura
+            </h1>
+            <p class="text-sm sm:text-base text-amber-200/60 mt-1 font-medium">
+              A Unit of Coondapur Education Society (R)
             </p>
           </div>
+        </div>
 
-          <!-- Search Type Selector -->
-          <div class="flex items-center justify-center gap-6 mb-8">
-            <button id="prev" class="p-3 rounded-full option-selector hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24" class="text-gray-600">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            
-            <div class="text-center">
-              <div id="current-option" class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent transition-all duration-300 px-6 py-2 rounded-xl bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200">
-                Title
-              </div>
-            </div>
-            
-            <button id="next" class="p-3 rounded-full option-selector hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24" class="text-gray-600">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
+        <!-- Right Section -->
+        <div class="relative z-10 flex gap-3">
+          <a href="/"
+             class="inline-flex items-center gap-2 px-5 py-3 rounded-xl
+                    bg-gradient-to-r from-blue-500/10 to-purple-500/10
+                    border border-blue-500/20 backdrop-blur-sm
+                    text-blue-100 font-semibold 
+                    shadow-[0_0_15px_rgba(59,130,246,0.15)]
+                    transition-all duration-300 
+                    hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-purple-500/20
+                    hover:border-blue-500/30 hover:shadow-[0_0_20px_rgba(59,130,246,0.25)]">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                 class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            All Books
+          </a>
+        </div>
+      </header>
+    </section>
+
+    <!-- Search Section -->
+    <section class="mt-8 mb-24 px-4">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3 drop-shadow-sm">
+          Library Statistics Search
+        </h2>
+        <p class="text-gray-500 text-lg font-medium max-w-2xl mx-auto">
+          Discover our comprehensive library collection with intelligent search
+        </p>
+      </div>
+
+      <!-- Search Type Selector -->
+      <div class="flex items-center justify-center gap-4 md:gap-6 mb-8">
+        <button id="prev"
+          class="p-3 rounded-full border border-gray-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" width="20" height="20" class="text-gray-600">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <div class="text-center">
+          <div id="current-option"
+            class="text-lg md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent transition-all duration-300 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 shadow-inner">
+            Title
           </div>
+        </div>
 
+        <button id="next"
+          class="p-3 rounded-full border border-gray-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" width="20" height="20" class="text-gray-600">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Search Form -->
+      <form id="search-form" class="max-w-2xl mx-auto">
+        <div class="relative w-full">
           <!-- Search Input -->
-          <div class="relative max-w-lg mx-auto">
-            <div class="relative">
-              <input
-                type="text"
-                id="search-input"
-                placeholder="Search Title..."
-                class="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-200 focus:border-blue-400 outline-none transition-all duration-300 text-lg search-input-glow bg-white shadow-lg"
-              />
-              <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24" class="text-gray-400">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-            </div>
-            <input type="hidden" id="search-type-hidden" value="Title" />
-            
-            <!-- Suggestions Box -->
-            <div id="suggestions" class="hidden absolute top-full left-0 right-0 bg-white border-2 border-blue-200 rounded-xl shadow-2xl z-10 max-h-48 overflow-y-auto mt-2">
-              <!-- Suggestions will be populated here -->
+          <div class="relative">
+            <input 
+              type="text" 
+              id="search-input" 
+              name="search_query"
+              placeholder="Search books..."
+              class="w-full px-5 py-4 text-lg rounded-2xl
+                     outline-none focus:outline-none 
+                     appearance-none bg-white/90 
+                     backdrop-blur-sm text-gray-900 
+                     shadow-lg border-0 placeholder-gray-400"
+            />
+            <input 
+              type="hidden" 
+              id="search-type-hidden" 
+              name="search_type"
+              value="Title"
+            />
+            <div class="absolute right-4 top-1/2 -translate-y-1/2">
+              <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
             </div>
           </div>
 
-          <!-- Search Button -->
-          <div class="text-center mt-6">
-            <button
-              id="search-btn"
-              class="px-10 py-4 bg-gradient-to-r from-red-500 to-indigo-600 hover:from-red-600 hover:to-indigo-700 text-white font-bold text-lg rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
-            >
-              Search
-            </button>
+          <!-- Suggestions Dropdown -->
+          <div id="suggestions" 
+               class="absolute w-full mt-1 py-2
+                      bg-white rounded-xl shadow-lg 
+                      border border-gray-100
+                      transition-all duration-200
+                      hidden z-50">
+          </div>
+        </div>
+
+        <!-- Search Button -->
+        <div class="text-center mt-6">
+          <button type="submit" id="search-btn"
+            class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600
+                   hover:from-indigo-700 hover:to-purple-700 text-white text-lg font-bold
+                   rounded-xl shadow-lg transform transition-all duration-200
+                   hover:scale-105 hover:shadow-xl min-w-[200px]">
+            Search
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="mt-8 px-4 hidden">
+      <div class="max-w-6xl mx-auto">
+        <div class="bg-white/10 backdrop-blur-sm p-8 rounded-3xl border border-white/20 shadow-2xl">
+          <h3 class="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-amber-100 to-purple-200 bg-clip-text text-transparent">
+            Search Results
+          </h3>
+          <div id="results-container" class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <!-- Results will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dynamic Search Results Section -->
+    <section id="dynamic-results" class="mt-8 px-4 hidden">
+      <div class="max-w-6xl mx-auto">
+        <div class="bg-gradient-to-br from-amber-900 via-amber-800 to-amber-700 p-8 rounded-3xl shadow-2xl border border-amber-600">
+          <h3 id="dynamic-header" class="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-amber-100 to-yellow-100 bg-clip-text text-transparent">
+            Search Results
+          </h3>
+          
+          <div id="dynamic-results-container" class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <!-- Dynamic results will be populated by JavaScript -->
           </div>
 
-        </section>
-
-        <!-- Results Section -->
-        <section id="results" class="hidden">
-          <div class="border-t border-gradient-to-r from-gray-200 to-gray-300 pt-8">
-            <h3 class="text-2xl font-bold text-[#6b1111] mb-6 text-center">Search Results</h3>
-            <div id="results-container" class="space-y-4">
-              <!-- Results will be populated here -->
+          <!-- Additional Info -->
+          <div class="mt-8 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-200 to-yellow-200 rounded-full border border-amber-400">
+              <svg class="w-5 h-5 text-amber-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span id="search-type-display" class="text-amber-800 font-medium">Search Type: </span>
             </div>
-            <div id="results-count" class="text-base text-gray-600 mt-4 text-center font-medium"></div>
           </div>
-        </section>
-      </main>
-    </div>
-
-     <footer class="bg-gradient-to-r from-rose-700 to-indigo-800 text-white rounded-lg">
+        </div>
+      </div>
+      
+    </section>
+        
+  </main>
+<footer class="bg-gradient-to-r from-rose-700 to-indigo-800 text-white rounded-lg">
   <div class="max-w-6xl mx-auto px-3 py-3 text-center text-sm">
     <div>Designed by <strong>III Year BCA (2025–26 Batch)</strong> | Under Guidance of <strong>Mr. Pranam Betrabet</strong></div>
   </div>
 </footer>
+  <script>
+    const options = ["Title", "Author", "Department", "Department Code"];
+    let currentIndex = 0;
 
-    </div>
-    <script>
-      const options = ["Title", "Author", "Department", "Department Code"];
-      let currentIndex = 0;
+    const display = document.getElementById("current-option");
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    const searchInput = document.getElementById("search-input");
+    const hiddenField = document.getElementById("search-type-hidden");
+    const suggestionsBox = document.getElementById("suggestions");
+    const searchForm = document.getElementById("search-form");
+    const searchBtn = document.getElementById("search-btn");
+    const resultsSection = document.getElementById("results");
+    const resultsContainer = document.getElementById("results-container");
 
-      const display = document.getElementById("current-option");
-      const prev = document.getElementById("prev");
-      const next = document.getElementById("next");
-      const searchInput = document.getElementById("search-input");
-      const hiddenField = document.getElementById("search-type-hidden");
-      const suggestionsBox = document.getElementById("suggestions");
-      const searchBtn = document.getElementById("search-btn");
-      const resultsSection = document.getElementById("results");
-      const resultsContainer = document.getElementById("results-container");
-      const resultsCount = document.getElementById("results-count");
+    function updateDisplay() {
+      display.classList.add("opacity-0");
+      setTimeout(() => {
+        display.textContent = options[currentIndex];
+        display.classList.remove("opacity-0");
+        display.classList.add("opacity-100");
+        searchInput.placeholder = "Search " + options[currentIndex] + "...";
+        hiddenField.value = options[currentIndex];
+        fetchSuggestions(searchInput.value);
+      }, 150);
+    }
 
-      function updateDisplay() {
-        display.classList.add("opacity-0");
-        setTimeout(() => {
-          display.textContent = options[currentIndex];
-          display.classList.remove("opacity-0");
-          display.classList.add("opacity-100");
-          searchInput.placeholder = "Search " + options[currentIndex] + "...";
-          hiddenField.value = options[currentIndex];
-          fetchSuggestions(searchInput.value);
-        }, 150);
+    prev.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + options.length) % options.length;
+      updateDisplay();
+    });
+
+    next.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % options.length;
+      updateDisplay();
+    });
+
+    searchInput.addEventListener("input", () => {
+      fetchSuggestions(searchInput.value);
+    });
+
+    // Fetch suggestions from API
+    function fetchSuggestions(query) {
+      if (!query.trim()) {
+        suggestionsBox.classList.add('hidden');
+        return;
       }
 
-      prev.addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + options.length) % options.length;
-        updateDisplay();
-      });
-
-      next.addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % options.length;
-        updateDisplay();
-      });
-
-      let currentQuery = ""; // to track user's current input
-
-      searchInput.addEventListener("input", () => {
-        currentQuery = searchInput.value;
-        fetchSuggestions(currentQuery);
-      });
-
-      function fetchSuggestions(query) {
-        if (!query.trim()) {
-          suggestionsBox.classList.add("hidden");
-          suggestionsBox.innerHTML = "";
-          return;
-        }
-
-        const searchType = hiddenField.value;
-        fetch(`/api/suggestions?type=${encodeURIComponent(searchType)}&q=${encodeURIComponent(query)}`)
-          .then(response => response.json())
-          .then(suggestions => {
-            if (suggestions.length > 0) {
-              suggestionsBox.innerHTML = suggestions
-                .map(suggestion => `
-                  <div class="px-4 py-3 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 cursor-pointer suggestion-item font-medium">${suggestion}</div>
-                `)
-                .join("");
-              suggestionsBox.classList.remove("hidden");
-            } else {
-              suggestionsBox.classList.add("hidden");
-            }
-          })
-          .catch(error => {
-            console.error("Error fetching suggestions:", error);
-            suggestionsBox.classList.add("hidden");
-          });
-      }
-
-      // Handle suggestion clicks
-      suggestionsBox.addEventListener("click", (e) => {
-        if (e.target.classList.contains("suggestion-item")) {
-          searchInput.value = e.target.textContent;
-          suggestionsBox.classList.add("hidden");
-          performSearch();
-        }
-      });
-
-      // Handle search button click
-      searchBtn.addEventListener("click", performSearch);
-
-      // Handle Enter key
-      searchInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-          performSearch();
-        }
-      });
-
-      function performSearch() {
-        const query = searchInput.value.trim();
-        const searchType = hiddenField.value;
-
-        if (!query) {
-          alert("Please enter a search term");
-          return;
-        }
-
-        // Show loading state
-        searchBtn.textContent = "Searching...";
-        searchBtn.disabled = true;
-
-        fetch("/api/search", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            query: query,
-            searchType: searchType
-          })
-        })
+      const searchType = document.getElementById("current-option").textContent;
+      
+      // Make API call to get suggestions
+      fetch(`/api/suggestions?type=${encodeURIComponent(searchType)}&q=${encodeURIComponent(query)}`)
         .then(response => response.json())
-        .then(data => {
-          displayResults(data.results, data.total);
-          resultsSection.classList.remove("hidden");
+        .then(suggestions => {
+          if (suggestions.length > 0) {
+            suggestionsBox.innerHTML = suggestions
+              .map(suggestion => `
+                <div class="suggestion-item cursor-pointer w-full text-left px-4 py-2 
+                             hover:bg-indigo-50 flex items-center gap-3"
+                     onclick="selectSuggestion('${suggestion.replace(/'/g, "\\'")}')">
+                  <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <div>
+                    <div class="text-gray-900 font-medium">${suggestion}</div>
+                    <div class="text-xs text-gray-500">${searchType}</div>
+                  </div>
+                </div>
+              `).join('');
+            
+            suggestionsBox.classList.remove('hidden');
+          } else {
+            suggestionsBox.innerHTML = `
+              <div class="px-4 py-2 text-center text-gray-500">
+                No matching ${searchType.toLowerCase()} found
+              </div>
+            `;
+            suggestionsBox.classList.remove('hidden');
+          }
         })
         .catch(error => {
-          console.error("Error performing search:", error);
-          alert("An error occurred while searching. Please try again.");
-        })
-        .finally(() => {
-          searchBtn.textContent = "Search";
-          searchBtn.disabled = false;
-        });
-      }
-
-      function displayResults(results, total) {
-        if (results.length === 0) {
-          resultsContainer.innerHTML = '<p class="text-center text-gray-500 py-12 text-lg">No results found</p>';
-        } else {
-          // Display the search title
-          const searchTitle = results[0]?.title || 'N/A';
-          
-          resultsContainer.innerHTML = `
-            <div class="mb-6">
-              <h4 class="text-xl font-bold text-[#6b1111] mb-4">Title: ${searchTitle}</h4>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <!-- Issued Card -->
-              <div class="bg-green-100 p-6 rounded-xl border-2 border-green-200 text-center hover:shadow-lg transition-all duration-300">
-                <div class="flex justify-center mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="32" height="32" class="text-green-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                  </svg>
-                </div>
-                <h5 class="text-lg font-semibold text-green-800 mb-2">Issued</h5>
-                <p class="text-2xl font-bold text-green-600">0 Books</p>
-              </div>
-              
-              <!-- Available Card -->
-              <div class="bg-blue-100 p-6 rounded-xl border-2 border-blue-200 text-center hover:shadow-lg transition-all duration-300">
-                <div class="flex justify-center mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="32" height="32" class="text-blue-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <h5 class="text-lg font-semibold text-blue-800 mb-2">Available</h5>
-                <p class="text-2xl font-bold text-blue-600">1 Books</p>
-              </div>
-              
-              <!-- Total Books Copies Card -->
-              <div class="bg-purple-100 p-6 rounded-xl border-2 border-purple-200 text-center hover:shadow-lg transition-all duration-300">
-                <div class="flex justify-center mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="32" height="32" class="text-purple-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                  </svg>
-                </div>
-                <h5 class="text-lg font-semibold text-purple-800 mb-2">Total Books Copies</h5>
-                <p class="text-2xl font-bold text-purple-600">1 Books</p>
-              </div>
+          console.error("Error fetching suggestions:", error);
+          suggestionsBox.innerHTML = `
+            <div class="px-4 py-2 text-center text-red-500">
+              Error loading suggestions
             </div>
           `;
-        }
-        
-        resultsCount.textContent = `Found ${total} result${total !== 1 ? 's' : ''}`;
+          suggestionsBox.classList.remove('hidden');
+        });
+    }
+
+    // Select suggestion function
+    function selectSuggestion(suggestion) {
+      searchInput.value = suggestion;
+      suggestionsBox.classList.add('hidden');
+      performSearch();
+    }
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+        suggestionsBox.classList.add('hidden');
+      }
+    });
+
+    // Form submission handler
+    searchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      performSearch();
+    });
+
+    // Perform search function using real API
+    function performSearch() {
+      const query = searchInput.value.trim();
+      const searchType = document.getElementById("current-option").textContent;
+
+      if (!query) {
+        alert("Please enter a search term");
+        return;
       }
 
-      // Hide suggestions when clicking outside
-      document.addEventListener("click", (e) => {
-        if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-          suggestionsBox.classList.add("hidden");
-        }
-      });
+      // Show loading state
+      searchBtn.disabled = true;
+      const originalText = searchBtn.innerHTML;
+      searchBtn.innerHTML = `
+        <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="ml-2">Searching...</span>
+      `;
 
-      // Initialize
-      updateDisplay();
-    </script>
-  </body>
+      // Make real API call to search endpoint
+      fetch("/api/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          query: query, 
+          searchType: searchType 
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        
+        // Hide the old results section
+        resultsSection.classList.add('hidden');
+        
+        displayResults(data);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("Error performing search: " + error.message);
+      })
+      .finally(() => {
+        searchBtn.disabled = false;
+        searchBtn.innerHTML = originalText;
+      });
+    }
+
+    // Display results function
+    function displayResults(data) {
+      const { results, stats } = data;
+      const dynamicResultsSection = document.getElementById('dynamic-results');
+      const dynamicResultsContainer = document.getElementById('dynamic-results-container');
+      const dynamicHeader = document.getElementById('dynamic-header');
+      const searchTypeDisplay = document.getElementById('search-type-display');
+      const searchType = document.getElementById("current-option").textContent;
+
+      if (!results || results.length === 0) {
+        dynamicResultsContainer.innerHTML = `
+          <div class="col-span-3 text-center py-12">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+              <svg class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+            <p class="text-xl text-red-600 font-semibold">
+              No results found for your search criteria.
+            </p>
+            <p class="text-gray-500 mt-2">Try adjusting your search terms or search type.</p>
+          </div>`;
+        
+        // Update header and search type
+        dynamicHeader.textContent = `No Results Found`;
+        searchTypeDisplay.textContent = `Search Type: ${searchType}`;
+        dynamicResultsSection.classList.remove('hidden');
+        return;
+      }
+
+      // Update header with search info
+      const searchQuery = searchInput.value.trim();
+      dynamicHeader.textContent = `${searchType}: ${searchQuery}`;
+      searchTypeDisplay.textContent = `Search Type: ${searchType}`;
+
+      // Display stat cards with the first design (beautiful gradient cards)
+      dynamicResultsContainer.innerHTML = `
+        <!-- Issued Books Card -->
+        <div class="p-8 rounded-2xl bg-gradient-to-br from-green-100 via-green-50 to-green-200 shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-green-300 hover:border-green-400 hover:shadow-2xl">
+          <div class="relative">
+            <!-- Background decoration -->
+            <div class="absolute inset-0 bg-gradient-to-br from-green-200/30 to-transparent rounded-xl"></div>
+            
+            <div class="relative z-10">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-green-200 rounded-full mb-4 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20H6a2 2 0 01-2-2V6a2 2 0 012-2h6m6 16V6m0 0l-4 4m4-4l4 4" />
+                </svg>
+              </div>
+              <h4 class="text-2xl font-bold text-green-800 mb-2">Issued Books</h4>
+              <p class="text-5xl font-bold text-green-700 mb-2 drop-shadow-sm">${stats.issued || 0}</p>
+              <p class="text-green-600 font-medium">Currently Borrowed</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Available Books Card -->
+        <div class="p-8 rounded-2xl bg-gradient-to-br from-blue-100 via-blue-50 to-blue-200 shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-blue-300 hover:border-blue-400 hover:shadow-2xl">
+          <div class="relative">
+            <!-- Background decoration -->
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-200/30 to-transparent rounded-xl"></div>
+            
+            <div class="relative z-10">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-200 rounded-full mb-4 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-blue-700">
+                  <path d="M3.75 6.75c2.25-1.25 5.25-1.25 7.5 0v10.5c-2.25-1.25-5.25-1.25-7.5 0V6.75zm16.5 0c2.25-1.25 5.25-1.25-7.5 0v10.5c2.25-1.25 5.25-1.25 7.5 0V6.75z" />
+                </svg>
+              </div>
+              <h4 class="text-2xl font-bold text-blue-800 mb-2">Available Books</h4>
+              <p class="text-5xl font-bold text-blue-700 mb-2 drop-shadow-sm">${stats.available || 0}</p>
+              <p class="text-blue-600 font-medium">Ready to Borrow</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total Books Card -->
+        <div class="p-8 rounded-2xl bg-gradient-to-br from-purple-100 via-purple-50 to-purple-200 shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-purple-300 hover:border-purple-400 hover:shadow-2xl">
+          <div class="relative">
+            <!-- Background decoration -->
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-200/30 to-transparent rounded-xl"></div>
+            
+            <div class="relative z-10">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-purple-200 rounded-full mb-4 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
+              </div>
+              <h4 class="text-2xl font-bold text-purple-800 mb-2">Total Books</h4>
+              <p class="text-5xl font-bold text-purple-700 mb-2 drop-shadow-sm">${stats.total || 0}</p>
+              <p class="text-purple-600 font-medium">In Collection</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Show the dynamic results section
+      dynamicResultsSection.classList.remove('hidden');
+      
+      // Scroll to the dynamic results
+      dynamicResultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Initialize
+    updateDisplay();
+  </script>
+
+</body>
+
 </html>

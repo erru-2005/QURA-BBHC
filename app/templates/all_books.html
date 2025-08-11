@@ -73,10 +73,12 @@
              hover:from-red-600 hover:to-indigo-700 text-white font-semibold 
              transition-all transform hover:scale-105 hover:shadow-lg w-full md:w-auto"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M11 19V6m-4 13v-4m8 4V10m4 9V4" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg"
+    fill="none" viewBox="0 0 24 24" stroke="currentColor"
+    class="w-5 h-5">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+       d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+</svg>
       <span>Statistics</span>
     </a>
 
@@ -103,9 +105,7 @@
            transition-all duration-300 shadow-sm w-full md:w-auto"
   >
     <option value="">All Departments</option>
-    <option value="science">Science</option>
-    <option value="arts">Arts</option>
-    <option value="commerce">Commerce</option>
+    <!-- Options will be populated dynamically -->
   </select>
 </div>
 

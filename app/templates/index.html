@@ -388,7 +388,7 @@
     function performSearch() {
       const query = searchInput.value.trim();
       const searchType = document.getElementById("current-option").textContent;
-
+     
       if (!query) {
         alert("Please enter a search term");
         return;
@@ -416,6 +416,7 @@
       })
       .then(response => response.json())
       .then(data => {
+        
         if (data.error) {
           throw new Error(data.error);
         }
@@ -437,7 +438,8 @@
 
     // Display results function
     function displayResults(data) {
-      const { results, stats } = data;
+      console.log("Search Results:", data);
+      const { stats } = data;
       const dynamicResultsSection = document.getElementById('dynamic-results');
       const dynamicResultsContainer = document.getElementById('dynamic-results-container');
       const dynamicHeader = document.getElementById('dynamic-header');
@@ -532,7 +534,7 @@
 
       // Show the dynamic results section
       dynamicResultsSection.classList.remove('hidden');
-      
+      searchInput.value = ''; // Clear the search input
       // Scroll to the dynamic results
       dynamicResultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }

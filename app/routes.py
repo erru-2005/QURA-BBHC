@@ -17,48 +17,7 @@ def statistics():
         header = None
         search_type = None
 
-        if request.method == "POST":
-            query = request.form.get("query", "").strip()
-            search_type = request.form.get("search_type", "").strip()
-
-            if not query or not search_type:
-                return render_template(
-                    'index.html',
-                    error="Please enter both query and search type."
-                )
-
-            # Prepare query value based on search type
-            if search_type == "Department Code":
-                query_value = query.upper()
-                db_field = "department_code"
-            elif search_type == "Title":
-                query_value = query.upper()
-                db_field = "title"
-            elif search_type == "Author":
-                query_value = query.title()
-                db_field = "author"
-            elif search_type == "Department":
-                query_value = query.title()
-                db_field = "department"
-            else:
-                query_value = query
-                db_field = "title"
-
-            header = f"{search_type}: {query_value}"
-
-            # Prepare MongoDB filter
-            filter_query = {db_field: query_value}
-            filter_query_issued = {"book." + db_field: query_value, "status": "issued"}
-
-            # Count total books
-            total_books = mongo.db.books.count_documents(filter_query)
-
-            # Count issued books
-            issued_books_count = mongo.db.issued_books.count_documents(filter_query_issued)
-            
-            # Calculate available books
-            available_books = total_books - issued_books_count
-
+        
         # Always render the page
         return render_template(
             'index.html',
@@ -107,7 +66,8 @@ def get_books():
     try:
         search = request.args.get('q', '').strip()
         department = request.args.get('department', '').strip()
-        
+        print(search)
+        print(department)
         # Build filter query
         filter_query = {}
         if department:
@@ -164,46 +124,54 @@ def get_authors():
 @main.route('/api/search', methods=['POST'])
 def search():
     try:
+        print("Search request received")
         data = request.get_json()
+        print(data)
         search_type = data.get('searchType', 'Title')
         query = data.get('query', '').strip()
-        
-        if not query:
-            return jsonify({'results': [], 'total': 0})
-        
-        # Map search type to field
-        field = {
-            'Title': 'title',
-            'Author': 'author',
-            'Department': 'department',
-            'Department Code': 'department_code'
-        }.get(search_type, 'title')
-        
-        # Create regex pattern
-        import re
-        pattern = re.compile(query, re.IGNORECASE)
-        
-        # Find matching books
-        books = list(mongo.db.books.find({field: pattern}))
-        
-        # Get counts
-        total_copies = len(books)
-        issued_books = mongo.db.issued_books.count_documents({
-            'book.barcode': {'$in': [book.get('barcode') for book in books]},
-            'status': 'issued'
-        })
-        available_books = total_copies - issued_books
-        
-        # Convert ObjectId to string
-        for book in books:
-            book['_id'] = str(book['_id'])
-        
+       
+        if request.method == "POST":
+            if not query or not search_type:
+                return render_template(
+                    'index.html',
+                    error="Please enter both query and search type."
+                )
+
+            # Prepare query value based on search type
+            if search_type == "Department Code":
+                query_value = query.upper()
+                db_field = "department_code"
+            elif search_type == "Title":
+                query_value = query.upper()
+                db_field = "title"
+            elif search_type == "Author":
+                query_value = query.title()
+                db_field = "author"
+            elif search_type == "Department":
+                query_value = query.title()
+                db_field = "department"
+            else:
+                query_value = query
+                db_field = "title"
+
+            header = f"{search_type}: {query_value}"
+
+            # Prepare MongoDB filter
+            filter_query = {db_field: query_value}
+            filter_query_issued = {"book." + db_field: query_value, "status": "issued"}
+
+            # Count total books
+            total_books = mongo.db.books.count_documents(filter_query)
+            # Count issued books
+            issued_books_count = mongo.db.issued_books.count_documents(filter_query_issued)
+            # Calculate available books
+            available_books = total_books - issued_books_count
+
+
         return jsonify({
-            'results': books,
-            'total': total_copies,
             'stats': {
-                'total': total_copies,
-                'issued': issued_books,
+                'total': total_books,
+                'issued': issued_books_count,
                 'available': available_books
             }
         })

@@ -78,14 +78,14 @@ def get_books():
             filter_query['$or'] = [
                 {'title': pattern},
                 {'author': pattern},
-                {'isbn': pattern},
+                {'barcode': pattern},
                 {'department': pattern}
             ]
         
         # Get books with optimized query
         books_cursor = mongo.db.books.find(
             filter_query,
-            {'_id': 1, 'title': 1, 'author': 1, 'department': 1, 'isbn': 1, 'department_code': 1}
+            {'_id': 1, 'title': 1, 'author': 1, 'department': 1, 'barcode': 1, 'accession_number': 1}
         )  # Limit results for performance
         
         books = [{
@@ -93,6 +93,21 @@ def get_books():
             '_id': str(book['_id']),
             'status': 'available'
         } for book in books_cursor]
+        # Check if each book is Available or not
+        for book in books:
+            book['_id'] = str(book['_id'])
+            # Check if book is issued
+            issued_book = mongo.db.issued_books.find_one({
+                'book.barcode': book.get('barcode', ''),
+                'status': 'issued'
+            })
+            
+            if issued_book:
+                book['status'] = 'issued'
+                book['issued_to'] = issued_book.get('student', {}).get('studentName', 'Unknown')
+            else:
+                book['status'] = 'available'
+        
         
         return jsonify({
             'books': books,

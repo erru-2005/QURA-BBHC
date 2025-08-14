@@ -79,7 +79,7 @@
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
 </svg>
-      <span>Statistics</span>
+      <span>OPAC</span>
     </a>
 
   </div>
@@ -113,7 +113,7 @@
 <section class="mb-8">
   <div class="text-center mb-6">
     <h2 class="text-2xl sm:text-3xl font-bold text-[#6b1111] mb-1">
-      Library Book Collection
+      Online Public Access Catalog (OPAC)
     </h2>
     <p class="text-gray-600 text-sm sm:text-base">
      Discover every book in our library, all in one place
@@ -319,16 +319,26 @@
       
       <!-- Book Details -->
       <div class="space-y-2 text-gray-700 flex-grow text-sm md:text-base">
+        <p><span class="font-semibold text-orange-600">Accession Number:</span> ${book.accession_number || 'N/A'}</p>
         <p><span class="font-semibold text-pink-600">Author:</span> ${book.author || 'Unknown'}</p>
+        
         <p><span class="font-semibold text-indigo-600">Department:</span> ${book.department || 'N/A'}</p>
-        ${book.isbn ? `<p><span class="font-semibold text-blue-600">ISBN:</span> ${book.isbn}</p>` : ''}
+        <p><span class="font-semibold text-purple-600">Barcode:</span> ${book.barcode || 'N/A'}</p>
       </div>
       
       <!-- Footer -->
       <div class="pt-4 border-t border-gray-200 flex justify-between items-center">
+        ${book.status === 'available' ? 
+          `<span class="px-4 py-1.5 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+            Available
+          </span>` : 
+          `<span class="px-4 py-1.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+            Unavailable
+          </span>`
+        }
         <span class="px-4 py-1.5 rounded-full text-xs font-semibold bg-green-50 text-green-700">
-          Available
-        </span>
+            
+          </span>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 hover:text-indigo-500 transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>

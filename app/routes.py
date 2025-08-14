@@ -86,7 +86,7 @@ def get_books():
         books_cursor = mongo.db.books.find(
             filter_query,
             {'_id': 1, 'title': 1, 'author': 1, 'department': 1, 'isbn': 1, 'department_code': 1}
-        ).limit(50)  # Limit results for performance
+        )  # Limit results for performance
         
         books = [{
             **book,

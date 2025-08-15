@@ -34,30 +34,7 @@ def statistics():
 
 @main.route('/all-books')
 def all_books():
-    try:
-        # Get all books from MongoDB
-        books_cursor = mongo.db.books.find()
-        books = []
-        
-        for book in books_cursor:
-            book['_id'] = str(book['_id'])
-            # Check if book is issued
-            issued_book = mongo.db.issued_books.find_one({
-                'book.barcode': book.get('barcode', ''),
-                'status': 'issued'
-            })
-            
-            if issued_book:
-                book['status'] = 'issued'
-                book['issued_to'] = issued_book.get('student', {}).get('studentName', 'Unknown')
-            else:
-                book['status'] = 'available'
-            
-            books.append(book)
-            
-    except Exception as e:
-        print(f"Error fetching books: {e}")
-        books = []
+    
     
     return render_template('all_books.html', books=books)
 

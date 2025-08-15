@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>All Books - Library Management</title>
+    <title>A+ BBHC ( OPAC )</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
@@ -183,12 +183,17 @@
     <script>
   // State management
   let searchTimeout;
+  let currentRequestController = null;
   const state = {
     books: [],
     searchQuery: '',
     department: '',
     hasSearched: false
   };
+
+  function isSingleDigitNumeric(value) {
+    return /^\d$/.test(value);
+  }
 
   // DOM elements
   const searchInput = document.getElementById('search-input');
@@ -214,25 +219,32 @@
       </div>
     `;
 
-    // Real-time search with debouncing
+    // Real-time search with debouncing and min length (allow single numeric digit)
     searchInput.addEventListener('input', () => {
-      clearTimeout(searchTimeout);
+      state.searchQuery = searchInput.value.trim();
+      if (searchTimeout) clearTimeout(searchTimeout);
       searchTimeout = setTimeout(() => {
-        state.searchQuery = searchInput.value.trim();
-        if (state.searchQuery.length >= 2) { // Search after 2 characters
+        const shouldSearch = state.searchQuery.length >= 2 || state.department || isSingleDigitNumeric(state.searchQuery);
+        if (shouldSearch) {
           searchBooks();
-        } else if (state.searchQuery.length === 0 && state.hasSearched) {
-          // If search is cleared and had previous results, show all books
-          loadAllBooks();
+        } else {
+          state.hasSearched = false;
+          booksContainer.innerHTML = '<div class="col-span-full text-center text-gray-500 py-6">Type at least 2 characters (or a single digit) to search</div>';
+          showLoading(false);
         }
-      }, 300);
+      }, 400);
     });
 
     // Department filter
     departmentSelect.addEventListener('change', () => {
       state.department = departmentSelect.value;
-      if (state.hasSearched || state.department) {
+      const shouldSearch = state.department || state.searchQuery.length >= 2 || isSingleDigitNumeric(state.searchQuery);
+      if (shouldSearch) {
         searchBooks();
+      } else {
+        state.hasSearched = false;
+        booksContainer.innerHTML = '<div class="col-span-full text-center text-gray-500 py-6">Select a department or type at least 2 characters (or a single digit) to search</div>';
+        showLoading(false);
       }
     });
 
@@ -265,20 +277,30 @@
 
   // Search books
   async function searchBooks() {
+    // Cancel any in-flight request
+    if (currentRequestController) {
+      currentRequestController.abort();
+    }
+    currentRequestController = new AbortController();
+    const { signal } = currentRequestController;
+
     showLoading(true);
     state.hasSearched = true;
     
     try {
       const params = new URLSearchParams({
         q: state.searchQuery,
-        department: state.department
+        department: state.department || ''
       });
 
-      const response = await fetch(`/api/books?${params}`);
+      const response = await fetch(`/api/books?${params}`, { signal });
       const data = await response.json();
       
-      displayBooks(data.books);
+      displayBooks((data && data.books) ? data.books : []);
     } catch (error) {
+      if (error && error.name === 'AbortError') {
+        return; // Ignore aborted requests
+      }
       console.error('Error searching books:', error);
       booksContainer.innerHTML = '<p class="text-center text-red-500">Error loading books</p>';
     } finally {
@@ -336,18 +358,34 @@
             Unavailable
           </span>`
         }
-        <span class="px-4 py-1.5 rounded-full text-xs font-semibold bg-green-50 text-green-700">
-            
-          </span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 hover:text-indigo-500 transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
+        <button type="button" class="book-btn group relative inline-flex items-center justify-center p-2 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 active:scale-95 transition-transform duration-200" aria-label="Book icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6 md:w-7 md:h-7 text-indigo-600 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75c2.25-1.25 5.25-1.25 7.5 0v10.5c-2.25-1.25-5.25-1.25-7.5 0V6.75zm16.5 0c-2.25-1.25-5.25-1.25-7.5 0v10.5c2.25-1.25 5.25-1.25 7.5 0V6.75z"/>
+            <g class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <circle cx="18.5" cy="6.2" r="1.1" fill="#f59e0b"></circle>
+              <circle cx="20.3" cy="8.2" r="0.8" fill="#f43f5e"></circle>
+              <circle cx="16.8" cy="7.8" r="0.6" fill="#34d399"></circle>
+            </g>
+          </svg>
+        </button>
+
       </div>
     </div>
   </div>
 `).join('');
+    // Attach interactions after cards render
+    requestAnimationFrame(() => attachBookIconListeners());
 
+  }
 
+  function attachBookIconListeners() {
+    const buttons = booksContainer.querySelectorAll('.book-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.add('animate-bounce');
+        setTimeout(() => btn.classList.remove('animate-bounce'), 600);
+      });
+    });
   }
 
   function showLoading(show) {
